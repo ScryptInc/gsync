@@ -11,5 +11,7 @@ ctags
 
 MANIFEST
 
+.idea
+
 .DS_Store
 *~

@@ -383,7 +383,10 @@ class Drive(object):
 
         yield self._service
 
-    def __del__(self): # pragma: no cover
+    def __del__(self):  # pragma: no cover
+        self._save_credentials()
+
+    def _save_credentials(self):
         debug("Saving credentials...")
         credentials = self._credentials
         if credentials:
@@ -448,23 +451,29 @@ class Drive(object):
         # In order to gain authorization, we need to be running on a TTY.
         # Let's make sure before potentially hanging the process waiting for
         # input from a non existent user.
+        print ("on tty: " + str(sys.stdin.isatty()))
         if not sys.stdin.isatty():
-            raise NoTTYError
+            # raise NoTTYError
+            pass
 
         # Locate the client.json file.
         client_json = self._get_config_file("client.json")
 
         # Create the client.json file if not present.
         if not os.path.exists(client_json):
-            try:
-                from libgsync.drive.client_json import client_obj
 
-                with open(client_json, "w") as fd:
-                    fd.write(json.dumps(client_obj))
+            print "get the valid client.json from secure storage"
+            raise
 
-            except Exception, ex:
-                debug("Exception: %s" % repr(ex))
-                raise
+            # try:
+            #     from libgsync.drive.client_json import client_obj
+            #
+            #     with open(client_json, "w") as fd:
+            #         fd.write(json.dumps(client_obj))
+            #
+            # except Exception, ex:
+            #     debug("Exception: %s" % repr(ex))
+            #     raise
 
         if not os.path.exists(client_json):
             raise FileNotFoundError(client_json)
@@ -493,6 +502,9 @@ class Drive(object):
             raise ExchangeError
 
         self._credentials = credentials
+
+        self._save_credentials()
+        # print("credentials: " + credentials.to_json())
 
         return credentials
 
