@@ -402,7 +402,7 @@ class Drive(object):
             os.path.join(os.getenv('HOME', '~'), '.gsync')
         )
 
-        print ("Config dir = %s" % configdir)
+        # print ("Config dir = %s" % configdir)
         debug("Config dir = %s" % configdir)
 
         if not os.path.exists(configdir):
@@ -421,7 +421,7 @@ class Drive(object):
         envname = re.sub(r'[^0-9A-Z]', '_', 'GSYNC_%s' % name.upper())
         val = os.getenv(envname, os.path.join(self._get_config_dir(), name))
 
-        print ("Environment: %s=%s" % (envname, val))
+        # print ("Environment: %s=%s" % (envname, val))
         debug("Environment: %s=%s" % (envname, val))
 
         return val
