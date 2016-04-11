@@ -15,3 +15,5 @@ MANIFEST
 
 .DS_Store
 *~
+tests/data/Greg. Descripción vídeos
+tests/data/unicode_ó_file.txt
