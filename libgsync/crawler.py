@@ -165,12 +165,13 @@ class Crawler(object):
             if not GsyncOptions.recursive:
                 break
 
-
     def run(self):
         """
         Worker method called synchronously or as part of an asynchronous
         thread or subprocess.
         """
+        attempt_count = 0
+
         srcpath = self._src
         basepath, path = os.path.split(srcpath)
 
@@ -189,8 +190,17 @@ class Crawler(object):
 
         debug("Enumerating: %s" % repr(srcpath))
 
+        gsync_success = False
+
+        while gsync_success is False and attempt_count < 3:
+            gsync_success = self._walk_until_success(srcpath)
+            attempt_count += 1
+
+    def _walk_until_success(self, srcpath):
+        gsync_success = False
         try:
             self._walk(srcpath, self._walk_callback, self._dev)
+            gsync_success = True
 
         except KeyboardInterrupt, ex:
             print("\nInterrupted")
@@ -206,4 +216,4 @@ class Crawler(object):
                 self._sync.total_bytes_received,
                 self._sync.rate()
             ))
-
+        return gsync_success
