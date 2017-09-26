@@ -1,0 +1,15 @@
+{
+    "installed": {
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "client_email": "will@docbookmd.com",
+        "client_id": GSYNC_CLIENT_ID,
+        "client_secret": GSYNC_CLIENT_SECRET,
+        "client_x509_cert_url": "",
+        "redirect_uris": [
+            "urn:ietf:wg:oauth:2.0:oob",
+            "oob"
+        ],
+        "token_uri": "https://accounts.google.com/o/oauth2/token"
+    }
+}
